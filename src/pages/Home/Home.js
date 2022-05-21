@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import ProductRegistrationForm from '../../components/ProductRegistrationForm/ProductRegistrationForm';
 import * as S from './Styles'
 
 const Home = () => {
@@ -6,7 +6,7 @@ const Home = () => {
   return(
     <S.HomeContainer>
       <S.MainContent>
-        Conteúdo
+        <ProductRegistrationForm />
       </S.MainContent>
       <S.ProductsMenu>
         teste
