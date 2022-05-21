@@ -9,7 +9,8 @@ const AppRoutes = () => {
   useEffect(() => {
     const jwt = localStorage.getItem("user-token")
     const pathname = window.location.pathname
-    if(jwt && (pathname !== "/login" && pathname !== "/cadastro")) {
+
+    if(!jwt && (pathname !== "/login" && pathname !== "/cadastro")) {
       window.location.assign("/login")
     }
   }, [])

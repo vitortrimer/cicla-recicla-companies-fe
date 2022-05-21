@@ -16,9 +16,11 @@ const theme = extendTheme({ colors })
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
+    <React.Fragment>
       <GlobalStyles />
-      <Routes />
-    </ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Routes />
+      </ChakraProvider>
+    </React.Fragment>
   </React.StrictMode>
 );

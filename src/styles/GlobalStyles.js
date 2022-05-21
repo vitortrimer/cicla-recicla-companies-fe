@@ -11,6 +11,6 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     font-size: 14px;
-    min-height: 100vh;
+    min-height: 100vh !important;
   }
 `
