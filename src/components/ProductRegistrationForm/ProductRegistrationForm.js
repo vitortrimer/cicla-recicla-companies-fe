@@ -4,6 +4,7 @@ import editImage from "../../icons/edit.png";
 import saveImage from "../../icons/salvar.png";
 import deleteImage from "../../icons/excluir.png";
 import imagePaceholder from "../../icons/image-placeholder.png"
+import ProductService from "../../services/Product";
 import { Input } from '@chakra-ui/react';
 import * as S from "./Styles";
 
@@ -28,11 +29,14 @@ const ProductRegistrationForm = ({ product }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [previewImageUrl, setPreviewImageUrl] = useState("");
 
+  const service = new ProductService();
+
   const [formData, setFormData] = useState({
     name: "",
     type: "Tipo de material",
+    image: "",
     disposalInstructions: [
-      "",
+      { icon: "", instruction: "" },
     ]
   })
 
@@ -53,7 +57,7 @@ const ProductRegistrationForm = ({ product }) => {
       setSelectedFile(undefined)
       return
     }
-
+    getBase64(e.target.files[0])
     setSelectedFile(e.target.files[0])
   }
 
@@ -63,7 +67,7 @@ const ProductRegistrationForm = ({ product }) => {
 
   const handleAddInstruction = () => {
     let disposalInstructions = formData.disposalInstructions
-    disposalInstructions.push("")
+    disposalInstructions.push({icon: "", instruction: ""})
 
     setFormData(prevState => ({
       ...prevState,
@@ -91,12 +95,35 @@ const ProductRegistrationForm = ({ product }) => {
   const handleInstruction = (e, index) => {
     const value = e.target.value;
     let disposalInstructions = formData.disposalInstructions;
-    disposalInstructions[index] = value
+    disposalInstructions[index].instruction = value;
 
     setFormData(prevState => ({
       ...prevState,
       disposalInstructions: disposalInstructions
     }))
+  }
+
+  const getBase64 = (file) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      setFormData(prevState => ({
+        ...prevState,
+        image: reader.result
+      }))
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+ }
+
+  const handleSubmit = () => {
+    console.log("formData", formData)
+    service.packaging(formData).then(result => {
+      if(result.data) {
+        // handle success
+      }
+    })
   }
 
   return(
@@ -143,7 +170,7 @@ const ProductRegistrationForm = ({ product }) => {
         </S.DescriptionTitle>
         <S.ProductDescriptionItemsContainer>
           { formData.disposalInstructions.map((_, index) => (
-            <S.InfoInputView value={formData.disposalInstructions[index]} onChange={(e) => {handleInstruction(e, index)}} key={index}>
+            <S.InfoInputView value={formData.disposalInstructions[index].instruction} onChange={(e) => {handleInstruction(e, index)}} key={index}>
             <Input placeholder='Instrução de descarte' size='md' />
             { index === (formData.disposalInstructions.length - 1) &&
               (
@@ -173,7 +200,7 @@ const ProductRegistrationForm = ({ product }) => {
         style={{display: 'none'}}
       />
       <S.FormActions>
-        <S.ActionButton>
+        <S.ActionButton onClick={handleSubmit}>
           <span>Salvar</span>
           <img src={saveImage} alt="Ícone disquete"/>
         </S.ActionButton>

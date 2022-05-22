@@ -93,7 +93,7 @@ const ProductRegistrationView = ({ product }) => {
         </S.MenuButtonContainer>
         <S.ProductDescription>
           <S.DescriptionTitle>
-          Descrição do seu produto:
+          Instruções de descarte:
           </S.DescriptionTitle>
           <S.ProductDescriptionItemsContainer>
             <S.ProductDescriptionItem>
