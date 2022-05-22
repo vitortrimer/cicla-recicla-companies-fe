@@ -84,7 +84,7 @@ const ProductRegistrationView = ({ product }) => {
           </S.ProductDescription>
           <S.AsideContainer>
             <Menu>
-              <MenuButton disabled as={Button} rightIcon={<ChevronDownIcon />}>
+              <MenuButton style={{'width': '178px'}} disabled as={Button} rightIcon={<ChevronDownIcon />}>
                 {product.type}
               </MenuButton>
               <MenuList>

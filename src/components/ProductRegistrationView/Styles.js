@@ -101,10 +101,21 @@ export const ActionButton = styled.button`
 `
 
 export const BottomContainer = styled.div`
+  width: 100%;
   display: flex;
+  margin-bottom: 16px;
 `
 
 export const AsideContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   flex: 1;
   margin-left: 16px;
+
+  img {
+    width: 178px;
+    object-fit: cover;
+  }
 `
