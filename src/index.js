@@ -17,10 +17,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <React.Fragment>
-      <GlobalStyles />
       <ChakraProvider theme={theme}>
         <Routes />
       </ChakraProvider>
+      <GlobalStyles />
     </React.Fragment>
   </React.StrictMode>
 );

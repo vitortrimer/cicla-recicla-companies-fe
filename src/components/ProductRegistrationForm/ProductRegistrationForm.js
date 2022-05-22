@@ -1,13 +1,40 @@
 import { useState, useEffect, useRef } from "react";
+import recycleImage from "../../icons/garrafa-recicla.png";
+import editImage from "../../icons/edit.png";
+import saveImage from "../../icons/salvar.png";
+import deleteImage from "../../icons/excluir.png";
+import imagePaceholder from "../../icons/image-placeholder.png"
+import { Input } from '@chakra-ui/react';
 import * as S from "./Styles";
 
-import imagePaceholder from "../../icons/image-placeholder.png";
+import {
+  Menu,
+  MenuList,
+  MenuButton,
+  MenuItem,
+  Button,
+  IconButton
+} from '@chakra-ui/react'
+
+import { 
+  ChevronDownIcon,
+  AddIcon
+} from '@chakra-ui/icons'
+
 import editIcon from "../../icons/icone-editar.png"
 
-const ProductRegistrationForm = () => {
+const ProductRegistrationForm = ({ product }) => {
   const hiddenFileInput = useRef(null);
   const [selectedFile, setSelectedFile] = useState();
   const [previewImageUrl, setPreviewImageUrl] = useState("");
+
+  const [formData, setFormData] = useState({
+    name: "",
+    type: "Tipo de material",
+    disposalInstructions: [
+      "",
+    ]
+  })
 
   useEffect(() => {
     if (!selectedFile) {
@@ -34,10 +61,49 @@ const ProductRegistrationForm = () => {
     hiddenFileInput.current.click();
   };
 
+  const handleAddInstruction = () => {
+    let disposalInstructions = formData.disposalInstructions
+    disposalInstructions.push("")
+
+    setFormData(prevState => ({
+      ...prevState,
+      disposalInstructions: disposalInstructions
+    }))
+  }
+
+  const handleChange = (e) => {
+    const inputName = e.target.name
+    const value = e.target.value
+
+    setFormData(prevState => ({
+      ...prevState,
+      [inputName]: value
+    }))
+  }
+
+  const handleType = (typeName) => {
+    setFormData(prevState => ({
+      ...prevState,
+      type: typeName
+    }))
+  }
+
+  const handleInstruction = (e, index) => {
+    const value = e.target.value;
+    let disposalInstructions = formData.disposalInstructions;
+    disposalInstructions[index] = value
+
+    setFormData(prevState => ({
+      ...prevState,
+      disposalInstructions: disposalInstructions
+    }))
+  }
+
   return(
-    <div>
+    <S.FormContainer>
+      <Input name="name" onChange={handleChange} value={formData.name} placeholder='Nome do produto' size='md' />
       <S.ImagePreviewContainer>
-        <img
+        <S.ProductImage
           src={selectedFile ? previewImageUrl : imagePaceholder}
           alt="Imagem do produto"
         />
@@ -47,6 +113,56 @@ const ProductRegistrationForm = () => {
           <img src={editIcon} alt="editar"/>
         </S.EditButton>
       </S.ImagePreviewContainer>
+      <S.MenuButtonContainer>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            {formData.type}
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => {handleType("Plástico")}} minH='40px'>
+              <span>Plástico</span>
+            </MenuItem>
+            <MenuItem onClick={() => {handleType("Metal")}} minH='40px'>
+              <span>Metal</span>
+            </MenuItem>
+            <MenuItem onClick={() => {handleType("Vidro")}}  minH='40px'>
+              <span>Vidro</span>
+            </MenuItem>
+            <MenuItem onClick={() => {handleType("Papel")}} minH='40px'>
+              <span>Papel</span>
+            </MenuItem>
+            <MenuItem onClick={() => {handleType("Não Reciclável")}} minH='40px'>
+              <span>Não Reciclável</span>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </S.MenuButtonContainer>
+      <S.ProductDescription>
+        <S.DescriptionTitle>
+        Instruções de descarte:
+        </S.DescriptionTitle>
+        <S.ProductDescriptionItemsContainer>
+          { formData.disposalInstructions.map((_, index) => (
+            <S.InfoInputView value={formData.disposalInstructions[index]} onChange={(e) => {handleInstruction(e, index)}} key={index}>
+            <Input placeholder='Instrução de descarte' size='md' />
+            { index === (formData.disposalInstructions.length - 1) &&
+              (
+              <IconButton
+              variant='outline'
+              aria-label='Adicionar novo'
+              icon={<AddIcon />}
+              onClick={handleAddInstruction}
+              />
+              )
+            }
+            </S.InfoInputView>
+          ))
+
+          }
+
+        </S.ProductDescriptionItemsContainer>
+      </S.ProductDescription>
+
       <input
         type="file"
         id="product-image"
@@ -56,7 +172,13 @@ const ProductRegistrationForm = () => {
         ref={hiddenFileInput}
         style={{display: 'none'}}
       />
-    </div>
+      <S.FormActions>
+        <S.ActionButton>
+          <span>Salvar</span>
+          <img src={saveImage} alt="Ícone disquete"/>
+        </S.ActionButton>
+      </S.FormActions>
+    </S.FormContainer>
   )
 }
 

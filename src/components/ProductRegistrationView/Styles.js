@@ -25,8 +25,8 @@ export const ImagePreviewContainer = styled.div`
   position: relative;
   width: 236px;
   height: 236px;
-  margin-top: 16px;
   background: #fff;
+  margin-top: 16px;
 
   border-radius: 50%;
 `
@@ -98,17 +98,4 @@ export const ActionButton = styled.button`
   img {
     margin-left: 8px;
   }
-`
-
-export const InfoInputView = styled.div`
-  display: flex;
-
-  :not(:first-child) {
-    margin-top: 8px;
-  }
-
-  button {
-    margin-left: 12px;
-  }
-
 `

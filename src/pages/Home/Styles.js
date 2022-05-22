@@ -9,10 +9,14 @@ export const MainContent = styled.div`
   align-items: center;
   flex-direction: column;
 
+  height: 100vh;
+  overflow: scroll;
   flex: 1;
 `
 
 export const ProductsMenu = styled.div`
-  width: 30vw;
-  background-color: red;
+  max-width: 413px;
+  width: 413px;
+  background: #F1DBA1;
 `
+
