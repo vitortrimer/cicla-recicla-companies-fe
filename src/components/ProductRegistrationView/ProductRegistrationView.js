@@ -67,44 +67,47 @@ const ProductRegistrationView = ({ product }) => {
             <img src={editIcon} alt="editar"/>
           </S.EditButton>
         </S.ImagePreviewContainer>
-        <S.MenuButtonContainer>
-          <Menu>
-            <MenuButton disabled as={Button} rightIcon={<ChevronDownIcon />}>
-              {product.type}
-            </MenuButton>
-            <MenuList>
-              <MenuItem minH='40px'>
-                <span>Plástico</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Metal</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Vidro</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Papel</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Não Reciclável</span>
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </S.MenuButtonContainer>
-        <S.ProductDescription>
-          <S.DescriptionTitle>
-          Instruções de descarte:
-          </S.DescriptionTitle>
-          <S.ProductDescriptionItemsContainer>
-            { product?.disposalInstructions?.map((instruction) => (
-                <S.ProductDescriptionItem>
-                  <img src={recycleImage} alt="Ícone de reciclagem" />
-                  <span>{instruction.instruction}</span>
-                </S.ProductDescriptionItem>
-              ))
-            }
-          </S.ProductDescriptionItemsContainer>
-        </S.ProductDescription>
+        <S.BottomContainer>
+          <S.ProductDescription>
+            <S.DescriptionTitle>
+            Instruções de descarte:
+            </S.DescriptionTitle>
+            <S.ProductDescriptionItemsContainer>
+              { product?.disposalInstructions?.map((instruction) => (
+                  <S.ProductDescriptionItem>
+                    <img src={recycleImage} alt="Ícone de reciclagem" />
+                    <span>{instruction.instruction}</span>
+                  </S.ProductDescriptionItem>
+                ))
+              }
+            </S.ProductDescriptionItemsContainer>
+          </S.ProductDescription>
+          <S.AsideContainer>
+            <Menu>
+              <MenuButton disabled as={Button} rightIcon={<ChevronDownIcon />}>
+                {product.type}
+              </MenuButton>
+              <MenuList>
+                <MenuItem minH='40px'>
+                  <span>Plástico</span>
+                </MenuItem>
+                <MenuItem minH='40px'>
+                  <span>Metal</span>
+                </MenuItem>
+                <MenuItem minH='40px'>
+                  <span>Vidro</span>
+                </MenuItem>
+                <MenuItem minH='40px'>
+                  <span>Papel</span>
+                </MenuItem>
+                <MenuItem minH='40px'>
+                  <span>Não Reciclável</span>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+            <img src={product.qrCode} alt="Código para impressão" />
+          </S.AsideContainer>
+        </S.BottomContainer>
   
         <input
           type="file"

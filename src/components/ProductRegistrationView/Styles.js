@@ -99,3 +99,12 @@ export const ActionButton = styled.button`
     margin-left: 8px;
   }
 `
+
+export const BottomContainer = styled.div`
+  display: flex;
+`
+
+export const AsideContainer = styled.div`
+  flex: 1;
+  margin-left: 16px;
+`
