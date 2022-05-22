@@ -16,6 +16,7 @@ export const ProductCard = styled.button`
 `
 
 export const ProductImage = styled.img`
+  object-fit: scale-down;
   width: 35px;
   height: 35px;
 `

@@ -1,65 +1,50 @@
+import { useEffect, useState } from 'react';
 import ProductRegistrationForm from '../../components/ProductRegistrationForm/ProductRegistrationForm';
+import ProductRegistrationView from '../../components/ProductRegistrationView/ProductRegistrationView'
 import ProductsSidebar from '../../components/ProductsSidebar/ProductsSidebar';
+import ProductService from '../../services/Product';
 import * as S from './Styles'
 
 const Home = () => {
+  const [products, setProducts] = useState([])
+  const [isRegistering, setIsRegistering] = useState(true)
+  const [selectedProductIndex, setProductIndex] = useState(0)
 
-  const products = [
-    {
-      id: 1,
-      name: "Copo de café",
-      type: "Plástico",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 2,
-      name: "Copo de café",
-      type: "Metal",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 3,
-      name: "Copo de café",
-      type: "Papel",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 4,
-      name: "Copo de café",
-      type: "Vidro",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 5,
-      name: "Copo de café",
-      type: "plástico",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 6,
-      name: "Copo de café",
-      type: "plástico",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 7,
-      name: "Copo de café",
-      type: "plástico",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 8,
-      name: "Copo de café",
-      type: "plástico",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },  {
-      id: 9,
-      name: "Copo de café",
-      type: "plástico",
-      imgUrl: "https://embalagens.lojamegavale.com.br/imagens/copos-termico-cafe-descartaveis.png"
-    },
-  ]
+  useEffect(() => {
+    const service = new ProductService();
+    service.getPackaging().then(result => {
+      if(result?.data?.packaging) {
+        setProducts(result.data.packaging)
+      }
+    })
+  }, [])
+
+  const selectFromSidebar = (index, isNewProduct) => {
+    setIsRegistering(isNewProduct)
+    setProductIndex(index)
+  }
+
+  const handleAddItem = (product) => {
+    setIsRegistering(false)
+    let newProducts = products
+    newProducts.push(product)
+
+    setProductIndex(newProducts.length - 1)
+    setProducts(newProducts)
+  }
 
   return(
     <S.HomeContainer>
       <S.ProductsMenu>
-        <ProductsSidebar products={products} />
+        <ProductsSidebar setSelectedIndex={selectFromSidebar} products={products} />
       </S.ProductsMenu>
       <S.MainContent>
-        <ProductRegistrationForm product={products[0]} />
+        {
+          isRegistering
+          ? <ProductRegistrationForm setSelected={selectFromSidebar} handleAddItem={handleAddItem} />
+          : <ProductRegistrationView product={products[selectedProductIndex]} />
+        }
+        
       </S.MainContent>
     </S.HomeContainer>
   )

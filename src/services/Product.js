@@ -7,5 +7,9 @@ class ProductService {
     return axios.post(`${baseUrl}/packaging`, packaging)
   }
 
+  getPackaging() {
+    return axios.get(`${baseUrl}/packaging`)
+  }
+
 }
 export default ProductService

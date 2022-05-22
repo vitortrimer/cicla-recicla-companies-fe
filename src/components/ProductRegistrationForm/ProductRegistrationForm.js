@@ -6,6 +6,7 @@ import deleteImage from "../../icons/excluir.png";
 import imagePaceholder from "../../icons/image-placeholder.png"
 import ProductService from "../../services/Product";
 import { Input } from '@chakra-ui/react';
+import Modal from "../Modal/Modal";
 import * as S from "./Styles";
 
 import {
@@ -24,10 +25,12 @@ import {
 
 import editIcon from "../../icons/icone-editar.png"
 
-const ProductRegistrationForm = ({ product }) => {
+const ProductRegistrationForm = ({ product, handleAddItem }) => {
   const hiddenFileInput = useRef(null);
   const [selectedFile, setSelectedFile] = useState();
   const [previewImageUrl, setPreviewImageUrl] = useState("");
+  const [isPresentingSuccess, setIsPresentingSuccess] = useState(false)
+  const [responseData, setResponseData] = useState({})
 
   const service = new ProductService();
 
@@ -118,16 +121,24 @@ const ProductRegistrationForm = ({ product }) => {
  }
 
   const handleSubmit = () => {
-    console.log("formData", formData)
     service.packaging(formData).then(result => {
       if(result.data) {
-        // handle success
+        setResponseData(result.data)
+        setIsPresentingSuccess(true)
       }
     })
   }
 
+  const dismissModal = () => {
+    setIsPresentingSuccess(false)
+    handleAddItem(responseData)
+  }
+
   return(
     <S.FormContainer>
+      { isPresentingSuccess &&
+        <Modal handleDismiss={dismissModal} />
+      }
       <Input name="name" onChange={handleChange} value={formData.name} placeholder='Nome do produto' size='md' />
       <S.ImagePreviewContainer>
         <S.ProductImage

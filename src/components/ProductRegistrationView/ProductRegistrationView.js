@@ -53,11 +53,11 @@ const ProductRegistrationView = ({ product }) => {
     return(
       <S.FormContainer>
         <S.ProductTitle>
-          Nome do produto
+          {product.name}
         </S.ProductTitle>
         <S.ImagePreviewContainer>
           <S.ProductImage
-            src={product.imgUrl}
+            src={product.image}
             alt="Imagem do produto"
           />
           <S.EditButton
@@ -96,18 +96,13 @@ const ProductRegistrationView = ({ product }) => {
           Instruções de descarte:
           </S.DescriptionTitle>
           <S.ProductDescriptionItemsContainer>
-            <S.ProductDescriptionItem>
-              <img src={recycleImage} alt="Ícone de reciclagem" />
-              <span>Retire o máximo possível de resíduos de deu conteúdo da embalagem</span>
-            </S.ProductDescriptionItem>
-            <S.ProductDescriptionItem>
-              <img src={recycleImage} alt="Ícone de reciclagem" />
-              <span>Separe junto com as demais embalagens</span>
-            </S.ProductDescriptionItem>
-            <S.ProductDescriptionItem>
-              <img src={recycleImage} alt="Ícone de reciclagem" />
-              <span>Por fim, descarte a embalagem devidamente higienizados.</span>
-            </S.ProductDescriptionItem>
+            { product?.disposalInstructions?.map((instruction) => (
+                <S.ProductDescriptionItem>
+                  <img src={recycleImage} alt="Ícone de reciclagem" />
+                  <span>{instruction.instruction}</span>
+                </S.ProductDescriptionItem>
+              ))
+            }
           </S.ProductDescriptionItemsContainer>
         </S.ProductDescription>
   

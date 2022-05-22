@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react"
 import * as S from "./Styles"
 
-const RegisteredProduct = ({ product }) => {
+const RegisteredProduct = ({ product, index, setSelectedIndex }) => {
   const [typeColor, setTypeColor] = useState("#C4C4C4");
   const [typeTextColor, setTypeTextColor] = useState("#53595F");
+
+  const handleItem = (index) => {
+    setSelectedIndex(index, false)
+  }
 
   useEffect(() => {
     if(product.type === "Plástico") {
@@ -25,9 +29,9 @@ const RegisteredProduct = ({ product }) => {
   }, [])
 
   return(
-    <S.ProductCard>
+    <S.ProductCard onClick={() => { handleItem(index) }}>
       <S.ProductContent>
-        <S.ProductImage src={product.imgUrl} />
+        <S.ProductImage src={product.image} />
         <span>
           {product.name}
         </span>
