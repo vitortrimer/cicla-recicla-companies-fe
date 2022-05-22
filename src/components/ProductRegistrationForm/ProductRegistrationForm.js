@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import recycleImage from "../../icons/garrafa-recicla.png";
+import recycleImage from "../../icons/reciclagem.png";
 import editImage from "../../icons/edit.png";
 import saveImage from "../../icons/salvar.png";
 import deleteImage from "../../icons/excluir.png";

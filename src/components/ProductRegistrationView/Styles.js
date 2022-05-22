@@ -62,9 +62,8 @@ export const DescriptionTitle = styled.p`
 `
 
 export const ProductDescriptionItemsContainer = styled.div`
-  margin-top: 16px;
+  margin-top: 28px;
   margin-bottom: 26px;
-
 `
 
 export const ProductDescriptionItem = styled.div`
@@ -77,6 +76,12 @@ export const ProductDescriptionItem = styled.div`
   span {
     color: #338152;
     margin-left: 24px;
+  }
+
+  img {
+    width: 26px;
+    height: 26px;
+    object-fit: cover;
   }
 `
 
@@ -115,6 +120,7 @@ export const AsideContainer = styled.div`
   margin-left: 16px;
 
   img {
+    margin-top: 12px;
     width: 178px;
     object-fit: cover;
   }
